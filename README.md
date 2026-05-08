@@ -1,70 +1,133 @@
-# Getting Started with Create React App
+# ⚡ CollabCode — Realtime Code Editor
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+> **Code | Collaborate | Create**
 
-## Available Scripts
+A collaborative, real-time code editor that allows multiple users to write and execute code together in the same room — simultaneously.
 
-In the project directory, you can run:
+![Made with React](https://img.shields.io/badge/Frontend-React-61DAFB?style=for-the-badge&logo=react)
+![Node.js](https://img.shields.io/badge/Backend-Node.js-339933?style=for-the-badge&logo=node.js)
+![Socket.io](https://img.shields.io/badge/Realtime-Socket.io-010101?style=for-the-badge&logo=socket.io)
+![Java](https://img.shields.io/badge/Supports-Java-ED8B00?style=for-the-badge&logo=openjdk)
+![Python](https://img.shields.io/badge/Supports-Python-3776AB?style=for-the-badge&logo=python)
+![JavaScript](https://img.shields.io/badge/Supports-JavaScript-F7DF1E?style=for-the-badge&logo=javascript)
 
-### `npm start`
+---
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## 📸 Screenshots
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### 🏠 Home Page
+![Home Page](src\screenshots\home.png)
 
-### `npm test`
+### 🔐 Join Room
+![Join Room](./screenshots/join.png)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### 👥 Connected Users
+![Connected Users](./screenshots/users.png)
 
-### `npm run build`
+### 💻 Live Code Execution
+![Code Execution](./screenshots/editor.png)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+---
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## 🚀 Features
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- 👥 **Real-time Collaboration** — Multiple users can code together in the same room simultaneously
+- 💻 **Multi-language Support** — Java, Python, JavaScript
+- ▶️ **Live Code Execution** — Run code and see output instantly
+- 🔗 **Room System** — Create or join rooms with a unique Room ID
+- 📋 **Copy Room ID** — Share room with anyone instantly
+- 🎨 **Dracula Theme** — Beautiful dark theme, easy on the eyes
+- 👤 **User Avatars** — See who's connected in real-time
 
-### `npm run eject`
+---
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## 🛠️ Tech Stack
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+| Layer | Technology |
+|-------|-----------|
+| Frontend | React, CodeMirror |
+| Backend | Node.js, Express |
+| Realtime | Socket.io |
+| Code Execution | Child Process (exec) |
+| Styling | CSS3 |
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+---
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## 📦 Installation & Setup
 
-## Learn More
+### Prerequisites
+- Node.js installed
+- Java (JDK) installed
+- Python installed
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Steps
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```bash
+# 1. Clone the repo
+git clone https://github.com/harkirankalra/realtime-code-editor.git
+cd realtime-code-editor
 
-### Code Splitting
+# 2. Install dependencies
+npm install
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+# 3. Start backend server (Terminal 1)
+node server.js
 
-### Analyzing the Bundle Size
+# 4. Start frontend (Terminal 2)
+npm start
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-### Making a Progressive Web App
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## 🎮 How to Use
 
-### Advanced Configuration
+1. Enter your **username** on the home page
+2. **Create** a new room or **join** an existing one with a Room ID
+3. Share the **Room ID** with your friends
+4. Start coding **together in real-time**!
+5. Select language (Java / Python / JavaScript) and click **Run**
+6. See the output instantly in the **Output box** below
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+---
 
-### Deployment
+## 📁 Project Structure
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+```
+realtime-code-editor/
+├── src/
+│   ├── components/
+│   │   ├── Editor.js       # CodeMirror editor
+│   │   └── Client.js       # Connected user avatar
+│   ├── pages/
+│   │   ├── Home.js         # Landing page
+│   │   └── EditorPage.js   # Main editor page
+│   └── Actions.js          # Socket event constants
+├── server.js               # Express + Socket.io backend
+├── docker/                 # Docker configs for code execution
+└── README.md
+```
 
-### `npm run build` fails to minify
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## 🔮 Future Improvements
+
+- [ ] Responsive design for mobile
+- [ ] User input support (Scanner in Java, input() in Python)
+- [ ] Save code after page refresh (MongoDB)
+- [ ] In-room chat feature
+- [ ] Syntax error highlighting
+- [ ] Authentication system
+- [ ] Deploy on Railway/Vercel
+
+---
+
+## 👩‍💻 Author
+
+**Harkiran Kalra**  
+GitHub: [@harkirankalra](https://github.com/harkirankalra)
+
+---
+
+⭐ **Star this repo if you found it useful!**

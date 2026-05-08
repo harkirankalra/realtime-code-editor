@@ -254,3 +254,77 @@ footer a:hover {
 .status-dot.is-inactive {
     background-color: #A0A0A0;
 }
+.editorWrapper {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    overflow-y: auto;
+}
+
+.outputBox {
+    background-color: #1e1e2e;
+    color: #ffffff;
+    padding: 15px;
+    min-height: 150px;
+    max-height: 200px;
+    font-family: monospace;
+    font-size: 14px;
+    border-top: 2px solid #6272a4;
+    overflow-y: auto;
+}
+
+.outputBox h4 {
+    margin: 0 0 10px 0;
+    color: #bd93f9;
+}
+
+.outputBox pre {
+    margin: 0;
+    white-space: pre-wrap;
+}
+.runBar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 16px;
+    background-color: #1a1a2e;
+    border-bottom: 2px solid #6272a4;
+}
+
+.runBar select {
+    padding: 8px 12px;
+    background-color: #2D2E40;
+    color: white;
+    border: 1px solid #6272a4;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    outline: none;
+}
+
+.runBar select:hover {
+    border-color: #bd93f9;
+}
+
+.runBtn {
+    padding: 8px 20px;
+    background: linear-gradient(135deg, #7B2CBF, #9D4EDD);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.runBtn:hover {
+    background: linear-gradient(135deg, #9D4EDD, #7B2CBF);
+    transform: scale(1.05);
+}
+
+.runBtn:disabled {
+    background: #555;
+    cursor: not-allowed;
+    transform: none;
+}

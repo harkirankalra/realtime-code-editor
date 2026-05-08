@@ -5,6 +5,8 @@ import 'codemirror/theme/dracula.css';
 import 'codemirror/mode/javascript/javascript';
 import 'codemirror/addon/edit/closetag';
 import 'codemirror/addon/edit/closebrackets';
+import 'codemirror/mode/clike/clike'; // Java, C, C++ ke liye
+import 'codemirror/mode/python/python';
 import ACTIONS from '../Actions';
 
 const Editor = ({ socketRef, roomId, onCodeChange }) => {

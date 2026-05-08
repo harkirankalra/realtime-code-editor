@@ -1,5 +1,3 @@
-// src/pages/EditorPage.js
-
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import Client from "../components/Client";
@@ -10,76 +8,67 @@ import toast from "react-hot-toast";
 
 const EditorPage = () => {
   const socketRef = useRef(null);
-  const codeRef = useRef(null);
+  const codeRef = useRef("");
   const location = useLocation();
-  const reactNavigator = useNavigate();
+  const navigate = useNavigate();
   const { roomId } = useParams();
+
   const [clients, setClients] = useState([]);
+  const [language, setLanguage] = useState("java");
+  const [output, setOutput] = useState("");
+  const [isRunning, setIsRunning] = useState(false);
 
   // 🔹 Leave Room
   const leaveRoom = useCallback(() => {
-    reactNavigator("/");
+    navigate("/");
     toast.success("Disconnected from the room.");
-  }, [reactNavigator]);
+  }, [navigate]);
 
-  // 🔹 Initialize Socket
+  // 🔹 Socket Initialization
   useEffect(() => {
-    let isMounted = true;
-
     const init = async () => {
       function handleErrors(e) {
         console.error("Socket error", e);
-        toast.error("Socket connection failed, try again later.");
+        toast.error("Socket connection failed.");
         leaveRoom();
       }
 
       socketRef.current = await initSocket();
-
       socketRef.current.on("connect_error", handleErrors);
       socketRef.current.on("connect_failed", handleErrors);
 
-      const currentUsername = location.state?.username;
-      console.log("Attempting to join with username:", currentUsername);
+      const username = location.state?.username;
 
-      if (isMounted) {
-        socketRef.current.emit(ACTIONS.JOIN, {
-          roomId,
-          username: currentUsername,
-        });
-      }
-
-      socketRef.current.on(ACTIONS.JOINED, ({ clients, username, socketId: newSocketId }) => {
-        if (username !== currentUsername) {
-          toast.success(`${username} joined the room.`);
-        }
-        setClients(clients);
-
-        // Sync code for the new user
-        if (socketRef.current.id === newSocketId && codeRef.current !== null) {
-          socketRef.current.emit(ACTIONS.SYNC_CODE, {
-            code: codeRef.current,
-            socketId: newSocketId,
-          });
-        }
+      socketRef.current.emit(ACTIONS.JOIN, {
+        roomId,
+        username,
       });
 
+      
+// ✅ Fix - JOINED handler mein duplicate filter karo
+socketRef.current.on(ACTIONS.JOINED, ({ clients, username: joinedUser, socketId: joinedSocketId }) => {
+    if (joinedUser !== username) {
+        toast.success(`${joinedUser} joined the room.`);
+    }
+    // Duplicates remove karo
+    const unique = clients.filter((c, index, self) =>
+        index === self.findIndex((t) => t.username === c.username)
+    );
+    setClients(unique);
+});
       socketRef.current.on(ACTIONS.DISCONNECTED, ({ socketId, username }) => {
         toast.error(`${username} left the room.`);
-        setClients((prev) => prev.filter((client) => client.socketId !== socketId));
+        setClients((prev) =>
+          prev.filter((client) => client.socketId !== socketId)
+        );
       });
     };
 
     init();
 
-    // Cleanup
     return () => {
-      isMounted = false;
       if (socketRef.current) {
         socketRef.current.disconnect();
-        socketRef.current.off("connect_error");
-        socketRef.current.off("connect_failed");
-        socketRef.current.off(ACTIONS.JOINED);
-        socketRef.current.off(ACTIONS.DISCONNECTED);
       }
     };
   }, [location.state?.username, leaveRoom, roomId]);
@@ -88,10 +77,41 @@ const EditorPage = () => {
   const copyRoomId = async () => {
     try {
       await navigator.clipboard.writeText(roomId);
-      toast.success("Room ID has been copied to your clipboard.");
+      toast.success("Room ID copied.");
+    } catch {
+      toast.error("Failed to copy Room ID.");
+    }
+  };
+
+  // 🔹 RUN CODE (FINAL FIXED)
+  const runCode = async () => {
+    if (!codeRef.current) {
+      toast.error("Code is empty!");
+      return;
+    }
+
+    try {
+      setIsRunning(true);
+      setOutput("");
+
+      const res = await fetch("http://localhost:3001/run", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          language,
+          code: codeRef.current,
+        }),
+      });
+
+      const data = await res.json();
+      setOutput(data.output || "No output");
     } catch (err) {
-      toast.error("Could not copy Room ID.");
       console.error(err);
+      setOutput("Error while running code");
+    } finally {
+      setIsRunning(false);
     }
   };
 
@@ -120,11 +140,29 @@ const EditorPage = () => {
 
       {/* Editor Section */}
       <div className="editorWrapper">
+        <div className="runBar">
+          <select value={language} onChange={(e) => setLanguage(e.target.value)}>
+            <option value="java">Java</option>
+            <option value="python">Python</option>
+            <option value="javascript">JavaScript</option>
+          </select>
+
+          <button className="btn runBtn" onClick={runCode} disabled={isRunning}>
+            {isRunning ? "Running..." : "Run"}
+          </button>
+        </div>
+
         <Editor
           socketRef={socketRef}
           roomId={roomId}
           onCodeChange={(code) => (codeRef.current = code)}
         />
+
+        {/* ✅ OUTPUT BOX */}
+        <div className="outputBox">
+          <h4>Output</h4>
+          <pre>{output}</pre>
+        </div>
       </div>
     </div>
   );
