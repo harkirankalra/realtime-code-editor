@@ -16,16 +16,16 @@ A collaborative, real-time code editor that allows multiple users to write and e
 ## 📸 Screenshots
 
 ### 🏠 Home Page
-![Home Page](src\screenshots\home.png)
+![Home Page](./src/screenshots/home.png)
 
 ### 🔐 Join Room
-![Join Room](./screenshots/join.png)
+![Join Room](./src/screenshots/join.png)
 
 ### 👥 Connected Users
-![Connected Users](./screenshots/users.png)
+![Connected Users](./src/screenshots/users.png)
 
 ### 💻 Live Code Execution
-![Code Execution](./screenshots/editor.png)
+![Code Execution](./src/screenshots/editor.png)
 
 ---
 

@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 const Home = () => {
   const navigate = useNavigate();
   const [roomId, setroomId] = useState('');
-  // 💥 FIX: Change state name from 'Username' to 'username' (lowercase u)
+  
   const [username, setUsername] = useState(''); 
 
   const createNewRoom = (e) => {
@@ -19,15 +19,14 @@ const Home = () => {
   };
 
   const joinRoom = () => {
-    // 💥 FIX: Use the lowercase 'username' variable here
+    
     if (!roomId.trim() || !username.trim()) { 
       toast.error('ROOM ID & USERNAME IS REQUIRED');
       return;
     }
 
     navigate(`/editor/${roomId}`, {
-      // 💥 FIX: Ensure the state key is 'username' (lowercase u)
-      // This matches the key read by location.state?.username in EditorPage.js
+    
       state: { username }, 
     });
   };
@@ -81,9 +80,9 @@ const Home = () => {
               type="text"
               placeholder="Username"
               className="form-input"
-              // 💥 FIX: Use the lowercase setUsername
+              
               onChange={(e) => setUsername(e.target.value)} 
-              // 💥 FIX: Use the lowercase value
+              
               value={username} 
               onKeyDown={handleInputEnter}
             />
