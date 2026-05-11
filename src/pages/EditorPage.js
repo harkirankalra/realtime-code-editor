@@ -18,13 +18,13 @@ const EditorPage = () => {
   const [output, setOutput] = useState("");
   const [isRunning, setIsRunning] = useState(false);
 
-  // 🔹 Leave Room
+  //  Leave Room
   const leaveRoom = useCallback(() => {
     navigate("/");
     toast.success("Disconnected from the room.");
   }, [navigate]);
 
-  // 🔹 Socket Initialization
+  //  Socket Initialization
   useEffect(() => {
     const init = async () => {
       function handleErrors(e) {
@@ -45,12 +45,12 @@ const EditorPage = () => {
       });
 
       
-// ✅ Fix - JOINED handler mein duplicate filter karo
+
 socketRef.current.on(ACTIONS.JOINED, ({ clients, username: joinedUser, socketId: joinedSocketId }) => {
     if (joinedUser !== username) {
         toast.success(`${joinedUser} joined the room.`);
     }
-    // Duplicates remove karo
+    
     const unique = clients.filter((c, index, self) =>
         index === self.findIndex((t) => t.username === c.username)
     );
@@ -73,7 +73,7 @@ socketRef.current.on(ACTIONS.JOINED, ({ clients, username: joinedUser, socketId:
     };
   }, [location.state?.username, leaveRoom, roomId]);
 
-  // 🔹 Copy Room ID
+  //  Copy Room ID
   const copyRoomId = async () => {
     try {
       await navigator.clipboard.writeText(roomId);
@@ -83,7 +83,7 @@ socketRef.current.on(ACTIONS.JOINED, ({ clients, username: joinedUser, socketId:
     }
   };
 
-  // 🔹 RUN CODE (FINAL FIXED)
+  // RUN CODE 
   const runCode = async () => {
     if (!codeRef.current) {
       toast.error("Code is empty!");
@@ -158,7 +158,7 @@ socketRef.current.on(ACTIONS.JOINED, ({ clients, username: joinedUser, socketId:
           onCodeChange={(code) => (codeRef.current = code)}
         />
 
-        {/* ✅ OUTPUT BOX */}
+        {/*  OUTPUT BOX */}
         <div className="outputBox">
           <h4>Output</h4>
           <pre>{output}</pre>

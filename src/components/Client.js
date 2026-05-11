@@ -14,12 +14,12 @@ const Client = ({ username, isActive = false }) => {
         // or keep 'client' and modify the CSS
         <div className="client">
             
-            {/* 💡 WRAPPER for positioning the dot */}
+            {/*  WRAPPER for positioning the dot */}
             <div className="avatar-wrapper"> 
-                {/* 1. The Avatar */}
+                {/*  The Avatar */}
                 <Avatar name={username} size={50} round="14px"/>
                 
-                {/* 2. The Status Dot */}
+                {/* The Status Dot */}
                 <span className={`status-dot ${statusClass}`}></span> 
             </div>
             

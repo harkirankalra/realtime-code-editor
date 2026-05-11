@@ -66,7 +66,7 @@ function runCode(language, code) {
     console.log("stderr:", stderr);
     console.log("error:", error?.message);
     fs.rmSync(jobDir, { recursive: true, force: true });
-    if (error) return reject(stderr || error.message);  // ✅ NAYA
+    if (error) return reject(stderr || error.message);  
     resolve(stdout);
 
         });
